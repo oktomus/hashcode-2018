@@ -79,3 +79,9 @@ std::size_t Evaluator::eval(Pizza p, const Slices &s)
 
     return n;
 }
+
+bool Evaluator::validSlice(Pizza p, Slices s, const Slices::Slice &slice)
+{
+    s.s.push_back(slice);
+    return valid(p,s);
+}
