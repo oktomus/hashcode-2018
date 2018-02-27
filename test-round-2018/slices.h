@@ -18,6 +18,8 @@ public:
         std::size_t i2;
         std::size_t j2;
     };
+
+    std::vector<Slice> s;
 };
 
 #endif // SLICES_H
