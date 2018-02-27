@@ -1,16 +1,35 @@
+#include "io.h"
 #include "pizza.h"
 
+#include <cassert>
 #include <iostream>
 
-int main()
+#define CHECKPIZZA_ON_LOAD
+
+int main(int argc, const char * argv[])
 {
-    Pizza p(2, 5, 1, 3);
+    assert(argc == 2);
+    std::string pizza_path = argv[1];
 
-    p.setIngredient(1, 1, T);
-    p.setIngredient(1, 2, T);
-    p.setIngredient(0, 3, T);
+    // Load pizza
+    Pizza * pizza = 0;
+    IO::read_pizza(pizza_path, &pizza);
+    assert(pizza);
 
-    std::cout << p << std::endl;
+    // Check pizza
+#ifdef CHECKPIZZA_ON_LOAD
+    std::cout << *pizza << std::endl;
+    assert(pizza->rows() > 0);
+    assert(pizza->columns() > 0);
+
+    for(int r = pizza->rows() - 1; r >= 0; --r)
+    {
+        for(int c = pizza->columns()  -1; c >= 0; --c)
+        {
+            assert(pizza->getIngredient(r, c) != U);
+        }
+    }
+#endif
 
     return 0;
 }

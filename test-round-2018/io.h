@@ -9,7 +9,7 @@ class IO
 {
 public:
 
-    static void read_pizza(const std::string & path, Pizza * out);
+    static void read_pizza(const std::string & path, Pizza ** out);
 
 };
 
