@@ -25,6 +25,8 @@ Slices Solver::cut_pizza() const
         for(int width = h; width >= 1; --width)
         {
             int height = (h / width)-1;
+            if (width * height > m_H) continue;
+            if(width * height < 2 * m_pizza.m_min_ingredients) continue;
             candidates.push_back({width, height});
         }
     }

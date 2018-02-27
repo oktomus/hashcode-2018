@@ -104,9 +104,6 @@ bool Evaluator::validSlice(const Pizza & p, Slices s, const Slices::Slice &slice
     size_t width = slice.c2 - slice.c1;
     size_t height = slice.r2 - slice.r1;
 
-    if ((width + 1) * (height + 1) > p.m_max_slice_size)
-        return false;
-
     for(i=slice.r1;i<=slice.r2;++i)
     {
         for(j=slice.c1;j<=slice.c2;++j)
