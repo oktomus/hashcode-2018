@@ -2,7 +2,5 @@
 
 int main()
 {
-    FileReader fr;
-    test();
     return 0;
 }
