@@ -4,6 +4,7 @@ TARGET = test-round-2018
 SOURCES += main.cpp \
     pizza.cpp \
     io.cpp \
+    evaluator.cpp \
     slices.cpp
 
 HEADERS += \
