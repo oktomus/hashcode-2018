@@ -20,7 +20,7 @@ Slices Solver::cut_pizza() const
 
     // Generate primitves possibilities
     std::vector<std::pair<int, int>> candidates;
-    for(int h = m_H; h > 0; --h)
+    for(int h = m_H; h > 1; --h)
     {
         for(int width = h; width >= 1; --width)
         {
