@@ -29,3 +29,21 @@ void IO::read_pizza(const std::string &path, Pizza **out)
 
     reader.close();
 }
+
+void IO::write_slices(const std::string &path, const Slices &slices)
+{
+    std::ofstream writer(path);
+
+    assert(writer.is_open());
+
+    writer << slices.s.size() << "\n";
+
+    for(size_t i = 0; i < slices.s.size(); ++i)
+    {
+        const Slices::Slice & sl = slices.s[i];
+        writer << sl.r1 << " " << sl.c1 << " " << sl.r2 << " " << sl.c2 << "\n";
+    }
+
+    writer.close();
+
+}
