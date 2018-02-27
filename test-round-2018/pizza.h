@@ -9,8 +9,9 @@ typedef size_t Slice;
 
 enum Ingredient
 {
-    T = 0, // Tomato
-    M = 1 // Mushroom
+    U = 0,  // Undefined
+    T = 1,  // Tomato
+    M = 2   // Mushroom
 };
 
 class Cell
@@ -25,6 +26,13 @@ public:
 class Pizza
 {
 public:
+    /**
+     * @brief Pizza
+     * @param rows R
+     * @param columns C
+     * @param min_ingredient L
+     * @param max_cells H
+     */
     Pizza(size_t rows, size_t columns, size_t min_ingredient, size_t max_cells);
 
     const Cell &getCell(size_t r, size_t c) const;
@@ -32,8 +40,8 @@ public:
     Ingredient getIngredient(size_t r, size_t c) const;
     Slice getSlice(size_t r, size_t c) const;
 
-    void setSlice(size_t r, size_t c, Slice s);
     void setIngredient(size_t r, size_t c, Ingredient s);
+    void setSlice(size_t r, size_t c, Slice s);
 
     friend std::ostream & operator<<(std::ostream& os, const Pizza & p);
 
