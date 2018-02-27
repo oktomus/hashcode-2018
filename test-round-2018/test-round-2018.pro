@@ -5,6 +5,7 @@ SOURCES += main.cpp \
     pizza.cpp \
     io.cpp \
     slices.cpp \
+    evaluator.cpp \
     solver.cpp
 
 HEADERS += \

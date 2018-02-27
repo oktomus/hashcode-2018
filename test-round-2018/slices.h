@@ -13,11 +13,13 @@ public:
     {
         public:
         Slice();
-        std::size_t i1;
-        std::size_t j1;
-        std::size_t i2;
-        std::size_t j2;
+        std::size_t r1;
+        std::size_t c1;
+        std::size_t r2;
+        std::size_t c2;
     };
+
+    std::vector<Slice> s;
 };
 
 #endif // SLICES_H
