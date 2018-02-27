@@ -12,7 +12,6 @@ public:
     class Slice
     {
         public:
-        Slice();
         std::size_t r1;
         std::size_t c1;
         std::size_t r2;

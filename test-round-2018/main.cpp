@@ -40,6 +40,7 @@ int main(int argc, const char * argv[])
     // Save slices
     std::string pout = pizza_path.substr(0, pizza_path.find_last_of('.')) + ".out";
     IO::write_slices(pout, slices);
+    std::cout << "Exported slices to " << pout << "\n";
 
     return 0;
 }
