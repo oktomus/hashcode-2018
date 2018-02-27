@@ -18,5 +18,5 @@ std::ostream &operator<<(std::ostream &os, Slices::Slice &s)
 
 bool Slices::Slice::contains(const std::size_t &r, const std::size_t &c) const
 {
-    return r >= r1 && r <= r2 && c >= c1 && c <= c2;
+    return r >= r1 && r <= r2 + 1 && c >= c1 && c <= c2 + 1;
 }

@@ -73,13 +73,7 @@ Slices Solver::cut_pizza() const
                 if (ev.validSlice(m_pizza, result, candidate))
                 {
                     result.s.push_back(candidate);
-                    c = candidate.c1 + 1;
-
-                    if (c >= m_pizza.m_columns)
-                    {
-                        c = 0;
-                        r++;
-                    }
+                    c = candidate.c2 + 1;
                 }
             }
         }
