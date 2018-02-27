@@ -7,4 +7,6 @@ SOURCES += main.cpp \
 
 HEADERS += \
     pizza.h \
-    io.h
+    io.h \
+    evaluator.cpp \
+    slices.cpp
