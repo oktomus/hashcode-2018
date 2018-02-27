@@ -7,5 +7,3 @@ HEADERS += \
 SOURCES += \
     io/filereader.cpp \
     math/math.cpp
-
-INCLUDEPATH += /usr/include/eigen3

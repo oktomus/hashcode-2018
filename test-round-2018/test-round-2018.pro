@@ -1,7 +1,7 @@
 TEMPLATE = app
-TARGET = pizza
+TARGET = test-round-2018
 
 SOURCES += main.cpp
 
 INCLUDEPATH += ..
-LIBS += -L../foundation -lfoundation
+LIBS += -L../core -lcore

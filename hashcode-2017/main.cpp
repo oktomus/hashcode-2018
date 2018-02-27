@@ -1,5 +1,5 @@
-#include "foundation/io/filereader.h"
-#include "foundation/math/math.h"
+#include "core/io/filereader.h"
+#include "core/math/math.h"
 
 #include <iostream>
 

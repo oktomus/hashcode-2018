@@ -5,7 +5,7 @@ class FileReader
 {
 
 public:
-	FileReader();
+    FileReader();
 };
 
 #endif // FILEREADER_H
