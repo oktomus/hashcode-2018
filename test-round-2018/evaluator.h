@@ -10,7 +10,7 @@ public:
     Evaluator();
 
     bool valid(Pizza p, const Slices &s);
-    int eval(Pizza p, const Slices &s);
+    std::size_t eval(Pizza p, const Slices &s);
 };
 
 #endif // EVALUATOR_H
