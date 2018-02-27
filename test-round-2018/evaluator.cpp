@@ -1,5 +1,7 @@
 #include "evaluator.h"
 
+#include <cassert>
+
 Evaluator::Evaluator()
 {
 
@@ -80,7 +82,7 @@ std::size_t Evaluator::eval(Pizza p, const Slices &s)
     return n;
 }
 
-bool Evaluator::validSlice(Pizza p, Slices s, const Slices::Slice &slice)
+bool Evaluator::validSlice(const Pizza & p, Slices s, const Slices::Slice &slice)
 {
     /*
     s.s.push_back(slice);
@@ -92,20 +94,16 @@ bool Evaluator::validSlice(Pizza p, Slices s, const Slices::Slice &slice)
     std::size_t IM = 0;
 
     // check slice valid
+    assert(slice.r1 < p.m_rows);
+    assert(slice.c1 < p.m_columns);
 
-    if(slice.r2 >= p.m_rows || slice.c2 >= p.m_columns)
-        return false;
-    if(slice.r1 >= slice.r2 || slice.c1 >= slice.c2)
-        return false;
-    if((slice.r2-slice.r1)*(slice.c2-slice.c1) > p.m_max_slice_size)
-        return false;
+    if(slice.r2 >= p.m_rows) return false;
+    if(slice.c2 >= p.m_columns) return false;
 
     for(i=slice.r1;i<slice.r2;++i)
     {
         for(j=slice.c1;j<slice.c2;++j)
         {
-            if(p.getIngredient(i,j) == U)
-                return false;
             if(p.getIngredient(i,j) == T)
                 ++IT;
             if(p.getIngredient(i,j) == M)
@@ -116,26 +114,16 @@ bool Evaluator::validSlice(Pizza p, Slices s, const Slices::Slice &slice)
     if(IT < p.m_min_ingredients || IM < p.m_min_ingredients)
         return false;
 
-    std::size_t rect1x, rect1y, rect1w, rect1h;
-    std::size_t rect2x, rect2y, rect2w, rect2h;
-
-    rect1x = slice.r1;
-    rect1y = slice.c1;
-    rect1w = slice.r2 - slice.r1;
-    rect1h = slice.c2 - slice.c1;
-
     // check colision entre slice et s
     for(n=0;n<s.s.size();++n)
     {
-        rect1x = s.s.at(n).r1;
-        rect1y = s.s.at(n).c1;
-        rect1w = s.s.at(n).r2 - s.s.at(n).r1;
-        rect1h = s.s.at(n).c2 - s.s.at(n).c1;
+        const Slices::Slice & other = s.s[n];
 
-        if (rect1x < rect2x + rect2w &&
-           rect1x + rect1w > rect2x &&
-           rect1y < rect2y + rect2h &&
-           rect1h + rect1y > rect2y)
+        // If one corner is inside other
+        if ((slice.r1 >= other.r1 && slice.r1 <= other.r2  &&
+             slice.c1 >= other.c1 && slice.c1 <= other.c2 ) ||
+                (slice.r2 >= other.r1 && slice.r2 <= other.r2  &&
+                 slice.c2 >= other.c1 && slice.c2 <= other.c2))
             return false;
     }
     return true;

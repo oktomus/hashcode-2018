@@ -12,7 +12,7 @@ public:
     bool valid(Pizza p, const Slices &s);
     std::size_t eval(Pizza p, const Slices &s);
 
-    bool validSlice(Pizza p, Slices s, const Slices::Slice &slice);
+    bool validSlice(const Pizza & p, Slices s, const Slices::Slice &slice);
 };
 
 #endif // EVALUATOR_H
