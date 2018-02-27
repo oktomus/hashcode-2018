@@ -18,6 +18,7 @@ public:
         std::size_t c2;
 
         friend std::ostream & operator<<(std::ostream& os, const Slice & s);
+        bool contains(const std::size_t & r, const std::size_t & c) const;
     };
 
     std::vector<Slice> s;
