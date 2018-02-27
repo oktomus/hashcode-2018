@@ -21,6 +21,7 @@ Slices Solver::cut_pizza() const
 
     // Generate primitves possibilities
     std::vector<std::pair<int, int>> candidates;
+    /*
     for(int h = m_H-1; h > m_pizza.m_min_ingredients; --h)
     {
         for(int width = h; width >= 1; --width)
@@ -31,6 +32,16 @@ Slices Solver::cut_pizza() const
             candidates.push_back({width, height});
             if (width != height)
                 candidates.push_back({height, width});
+        }
+    }
+    */
+    for(size_t width = 0; width <= m_H; ++width)
+    {
+        for(size_t height = 0; height <= m_H; ++height)
+        {
+            if ((width + 1) * (height + 1) > m_H) continue;
+            if((width + 1) * (height + 1) < 2 * m_pizza.m_min_ingredients) continue;
+            candidates.push_back({width, height});
         }
     }
 
