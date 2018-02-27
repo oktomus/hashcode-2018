@@ -25,6 +25,16 @@ Ingredient &Pizza::getIngredient(size_t r, size_t c)
     return m_pizza[r * m_columns + c];
 }
 
+size_t Pizza::rows() const
+{
+    return m_rows;
+}
+
+size_t Pizza::columns() const
+{
+    return m_columns;
+}
+
 void Pizza::setIngredient(size_t r, size_t c, Ingredient s)
 {
     m_pizza[r * m_columns + c] = s;

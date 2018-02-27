@@ -28,7 +28,11 @@ public:
     const Ingredient &getIngredient(size_t r, size_t c) const;
     Ingredient & getIngredient(size_t r, size_t c);
 
+    size_t rows() const;
+    size_t columns() const;
+
     void setIngredient(size_t r, size_t c, Ingredient s);
+
 
     friend std::ostream & operator<<(std::ostream& os, const Pizza & p);
 
