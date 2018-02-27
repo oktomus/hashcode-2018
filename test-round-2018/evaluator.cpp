@@ -101,7 +101,10 @@ bool Evaluator::validSlice(const Pizza & p, Slices s, const Slices::Slice &slice
     if(slice.c2 >= p.m_columns) return false;
 
     // Superficie
-    if ((slice.r2 - slice.r1 + 1 ) * (slice.c2 - slice.c1 + 1) > p.m_max_slice_size)
+    size_t width = slice.c2 - slice.c1;
+    size_t height = slice.r2 - slice.r1;
+
+    if ((width + 1) * (height + 1) > p.m_max_slice_size)
         return false;
 
     for(i=slice.r1;i<=slice.r2;++i)
@@ -123,11 +126,18 @@ bool Evaluator::validSlice(const Pizza & p, Slices s, const Slices::Slice &slice
     {
         const Slices::Slice & other = s.s[n];
 
-        // If one corner is inside other
+        // top left inside it
         if ((slice.r1 >= other.r1 && slice.r1 <= other.r2  &&
              slice.c1 >= other.c1 && slice.c1 <= other.c2 ) ||
+                // Bottom right inside it
                 (slice.r2 >= other.r1 && slice.r2 <= other.r2  &&
-                 slice.c2 >= other.c1 && slice.c2 <= other.c2))
+                 slice.c2 >= other.c1 && slice.c2 <= other.c2) ||
+                // Top Right inside it
+                (slice.r1 >= other.r1 && slice.r1 <= other.r2 &&
+                 slice.c2 >= other.c1 && slice.c2 <= other.c2) ||
+                // Bottom left inside it
+                (slice.r2 >= other.r1 && slice.r2 <= other.r2 &&
+                 slice.c1 >= other.c1 && slice.c1 <= other.c2))
             return false;
     }
     return true;
