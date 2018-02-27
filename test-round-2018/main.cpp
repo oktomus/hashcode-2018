@@ -1,6 +1,7 @@
 #include "io.h"
 #include "pizza.h"
 #include "solver.h"
+#include "slices.h"
 
 #include <cassert>
 #include <iostream>
@@ -34,7 +35,11 @@ int main(int argc, const char * argv[])
 
     Solver solver(*pizza);
 
+    Slices slices = solver.cut_pizza();
 
+    // Save slices
+    std::string pout = pizza_path.substr(0, pizza_path.find_last_of('.')) + ".out";
+    IO::write_slices(pout, slices);
 
     return 0;
 }
