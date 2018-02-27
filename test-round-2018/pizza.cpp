@@ -2,13 +2,6 @@
 
 #include <cassert>
 
-Cell::Cell() :
-    type(M),
-    slice(0)
-{
-
-}
-
 Pizza::Pizza(size_t rows, size_t columns, size_t min_ingredient, size_t max_cells) :
     m_rows(rows),
     m_columns(columns),
@@ -18,38 +11,23 @@ Pizza::Pizza(size_t rows, size_t columns, size_t min_ingredient, size_t max_cell
 {
 }
 
-const Cell &Pizza::getCell(size_t r, size_t c) const
+const Ingredient &Pizza::getIngredient(size_t r, size_t c) const
 {
     assert(r < m_rows);
     assert(c < m_columns);
     return m_pizza[r * m_columns + c];
 }
 
-Cell &Pizza::getCell(size_t r, size_t c)
+Ingredient &Pizza::getIngredient(size_t r, size_t c)
 {
     assert(r < m_rows);
     assert(c < m_columns);
     return m_pizza[r * m_columns + c];
-}
-
-Ingredient Pizza::getIngredient(size_t r, size_t c) const
-{
-    return getCell(r, c).type;
-}
-
-Slice Pizza::getSlice(size_t r, size_t c) const
-{
-    return getCell(r, c).slice;
-}
-
-void Pizza::setSlice(size_t r, size_t c, Slice s)
-{
-    getCell(r, c).slice = s;
 }
 
 void Pizza::setIngredient(size_t r, size_t c, Ingredient s)
 {
-    getCell(r, c).type = s;
+    m_pizza[r * m_columns + c] = s;
 }
 
 std::ostream &operator<<(std::ostream &os, const Pizza &p)
@@ -59,10 +37,14 @@ std::ostream &operator<<(std::ostream &os, const Pizza &p)
         for(size_t c = 0; c < p.m_columns; c++)
         {
             Ingredient ig = p.getIngredient(r, c);
-            if (ig == M)
+            if (ig == U)
+                os << "U ";
+            else if (ig == M)
                 os << "M ";
-            else
+            else if (ig == T)
                 os << "T ";
+            else
+                os << "? ";
         }
         os << "\n";
     }
