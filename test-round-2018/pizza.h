@@ -36,7 +36,6 @@ public:
 
     friend std::ostream & operator<<(std::ostream& os, const Pizza & p);
 
-private:
     size_t m_rows; // Width
     size_t m_columns; // Height
     size_t m_min_ingredients; // Minimum number of ingredient per slice
