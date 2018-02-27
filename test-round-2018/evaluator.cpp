@@ -100,9 +100,9 @@ bool Evaluator::validSlice(const Pizza & p, Slices s, const Slices::Slice &slice
     if(slice.r2 >= p.m_rows) return false;
     if(slice.c2 >= p.m_columns) return false;
 
-    for(i=slice.r1;i<slice.r2;++i)
+    for(i=slice.r1;i<=slice.r2;++i)
     {
-        for(j=slice.c1;j<slice.c2;++j)
+        for(j=slice.c1;j<=slice.c2;++j)
         {
             if(p.getIngredient(i,j) == T)
                 ++IT;
