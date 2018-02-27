@@ -2,6 +2,8 @@
 #include "slices.h"
 #include "solver.h"
 
+#include <utility>
+
 Solver::Solver(Pizza &pizza) :
     m_pizza(pizza),
     m_L(pizza.m_min_ingredients),
@@ -16,6 +18,22 @@ Slices Solver::cut_pizza() const
     Slices::Slice candidate;
     Evaluator ev;
 
+    // Generate primitves possibilities
+    std::vector<std::pair<int, int>> candidates;
+    for(int width = m_H; width >= 1; --width)
+    {
+        int height = m_H / width;
+        candidates.push_back({width, height});
+    }
+
+    // Debug candidates
+    std::cout << "H: " << m_H << "\n";
+    std::cout << "Candidate slices : \n";
+    for(size_t s = 0; s < candidates.size(); s++)
+    {
+        std::cout << candidates[s].first << ", " << candidates[s].second << "\n";
+    }
+    std::cout << "\n";
 
     // For each empty place
     for(size_t r = 0; r < m_pizza.m_rows; ++r)
@@ -24,12 +42,11 @@ Slices Solver::cut_pizza() const
         for(size_t c = 0; c < m_pizza.m_columns; ++c)
         {
             candidate.c1 = c;
-            // Generate primitives
-            for(size_t width = m_H; width >= 1; --width)
+            // Test each primitive
+            for(size_t p = 0; p < candidates.size(); p++)
             {
-                size_t height = m_H / width;
-                candidate.c2 = c + width;
-                candidate.r2 = r + height;
+                candidate.c2 = c + candidates[p].first;
+                candidate.r2 = r + candidates[p].second;
                 // Add candidate
                 if (ev.validSlice(m_pizza, result, candidate))
                 {
