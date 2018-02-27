@@ -1,5 +1,6 @@
 #include "io.h"
 #include "pizza.h"
+#include "solver.h"
 
 #include <cassert>
 #include <iostream>
@@ -30,6 +31,10 @@ int main(int argc, const char * argv[])
         }
     }
 #endif
+
+    Solver solver(*pizza);
+
+
 
     return 0;
 }
