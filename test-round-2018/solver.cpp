@@ -2,6 +2,7 @@
 #include "slices.h"
 #include "solver.h"
 
+#include <algorithm>
 #include <utility>
 
 Solver::Solver(Pizza &pizza) :
@@ -26,13 +27,18 @@ Slices Solver::cut_pizza() const
         {
             int height = (h / width)-1;
             if (width * height > m_H) continue;
-            if(width * height < 2 * m_pizza.m_min_ingredients) continue;
+            //if(width * height < 2 * m_pizza.m_min_ingredients) continue;
             candidates.push_back({width, height});
+            if (width != height)
+                candidates.push_back({height, width});
         }
     }
 
+    std::sort(candidates.begin(), candidates.end());
+
     // Debug candidates
     std::cout << "H: " << m_H << "\n";
+    std::cout << "L: " << m_L << "\n";
     std::cout << "Candidate slices : \n";
     for(size_t s = 0; s < candidates.size(); s++)
     {
@@ -48,7 +54,7 @@ Slices Solver::cut_pizza() const
         {
             candidate.c1 = c;
             // Test each primitive
-            for(size_t p = 0; p < candidates.size(); p++)
+            for(int p = candidates.size() - 1; p >= 0; p--)
             {
                 candidate.c2 = c + candidates[p].first;
                 candidate.r2 = r + candidates[p].second;
