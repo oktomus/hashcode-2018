@@ -16,6 +16,8 @@ public:
         std::size_t c1;
         std::size_t r2;
         std::size_t c2;
+
+        friend std::ostream & operator<<(std::ostream& os, const Slice & s);
     };
 
     std::vector<Slice> s;
