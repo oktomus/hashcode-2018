@@ -43,20 +43,20 @@ void read(const std::string &filename, VideoSizes &videoSizes,
 {
     std::ifstream reader(filename);
 
-    std::size_t V, E, R, C, X, numberOfCaches, currentCache;
+    int V, E, R, C, X, numberOfCaches, currentCache;
     reader >> V >> E >> R >> C >> X;
 
-    for(size_t v = 0; v < V; ++v)
+    for(int v = 0; v < V; ++v)
     {
         reader >> videoSizes[v];
     }
 
-    for(size_t e = 0; e < E; ++e)
+    for(int e = 0; e < E; ++e)
     {
         reader >> endPointToCentral[e];
 
         reader >> numberOfCaches;
-        for(size_t c = 0; c < numberOfCaches; ++c)
+        for(int c = 0; c < numberOfCaches; ++c)
         {
             reader >> currentCache;
 
@@ -67,9 +67,9 @@ void read(const std::string &filename, VideoSizes &videoSizes,
         }
     }
 
-    std::size_t video, endpoint, requests;
+    int video, endpoint, requests;
 
-    for(size_t r = 0; r < R; ++r)
+    for(int r = 0; r < R; ++r)
     {
         reader >> video;
         reader >> endpoint;
