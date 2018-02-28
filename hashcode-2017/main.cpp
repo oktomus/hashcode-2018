@@ -36,16 +36,48 @@ typedef std::map<int, int> RemainingCapacity;
 // [Server ID] [VideoId, VideoID....]
 typedef std::map<int, std::vector<int>> AssignedServerVideos;
 
-void read(const std::string &filename)
+void read(const std::string &filename, VideoSizes &videoSizes,
+          EndPointToCentral &endPointToCentral, AllEndPointToServers &allEndPointToServers,
+          EndpointRequests &endpointRequests)
 {
     std::ifstream reader(filename);
 
-    std::size_t V, E, R, C, X;
+    std::size_t V, E, R, C, X, numberOfCaches, currentCache;
     reader >> V >> E >> R >> C >> X;
 
     for(size_t v = 0; v < V; ++v)
     {
+        reader >> videoSizes[v];
+    }
 
+    for(size_t e = 0; e < E; ++e)
+    {
+        reader >> endPointToCentral[e];
+
+        reader >> numberOfCaches;
+        for(size_t c = 0; c < numberOfCaches; ++c)
+        {
+            reader >> currentCache;
+
+            if(allEndPointToServers.count(e) < 1)
+                allEndPointToServers[e];
+
+            reader >> allEndPointToServers[e][currentCache];
+        }
+    }
+
+    std::size_t video, endpoint, requests;
+
+    for(size_t r = 0; r < R; ++r)
+    {
+        reader >> video;
+        reader >> endpoint;
+        reader >> requests;
+
+        if(endpointRequests.count(endpoint) < 1)
+            endpointRequests[endpoint];
+
+        endpointRequests[endpoint][video] = requests;
     }
 }
 
@@ -60,6 +92,8 @@ int main()
     EndpointRequests endpointRequests;
     RemainingCapacity remainingCapacity;
     AssignedServerVideos assignedServerVideos;
+
+    read("me_at_the_zoo.in", videoSizes, endPointToCentral, allEndPointToServers, endpointRequests);
 
     // Fill remaining capacities
     for(auto & kv : cacheServers)
