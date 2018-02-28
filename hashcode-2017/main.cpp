@@ -94,7 +94,7 @@ int main()
     RemainingCapacity remainingCapacity;
     AssignedServerVideos assignedServerVideos;
 
-    read("me_at_the_zoo.in", videoSizes, endPointToCentral, allEndPointToServers, endpointRequests);
+    read("exemple.in", videoSizes, endPointToCentral, allEndPointToServers, endpointRequests);
 
     // Fill remaining capacities
     for(auto & kv : cacheServers)
