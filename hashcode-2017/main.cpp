@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <map>
+#include <fstream>
 
 // Size for each video
 typedef std::map<int, int> VideoSizes;
@@ -27,5 +28,13 @@ typedef std::map<int, Requests> EndpointRequests;
 
 int main()
 {
+    VideoSizes videoSizes;
+    CacheServers cacheServers;
+    EndPointToCentral endPointToCentral;
+    EndPointToServers endPointToServers;
+    AllEndPointToServers allEndPointToServers;
+    Requests requests;
+    EndpointRequests endpointRequests;
+
     return 0;
 }
