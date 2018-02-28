@@ -2,6 +2,7 @@
 #include <vector>
 #include <map>
 #include <fstream>
+#include <limits>
 
 // Size for each video
 typedef std::map<int, int> VideoSizes;
@@ -36,6 +37,51 @@ typedef std::map<int, int> RemainingCapacity;
 // [Server ID] [VideoId, VideoID....]
 typedef std::map<int, std::vector<int>> AssignedServerVideos;
 
+void read(const std::string &filename, VideoSizes &videoSizes,
+          EndPointToCentral &endPointToCentral, AllEndPointToServers &allEndPointToServers,
+          EndpointRequests &endpointRequests)
+{
+    std::ifstream reader(filename);
+
+    int V, E, R, C, X, numberOfCaches, currentCache;
+    reader >> V >> E >> R >> C >> X;
+
+    for(int v = 0; v < V; ++v)
+    {
+        reader >> videoSizes[v];
+    }
+
+    for(int e = 0; e < E; ++e)
+    {
+        reader >> endPointToCentral[e];
+
+        reader >> numberOfCaches;
+        for(int c = 0; c < numberOfCaches; ++c)
+        {
+            reader >> currentCache;
+
+            if(allEndPointToServers.count(e) < 1)
+                allEndPointToServers[e];
+
+            reader >> allEndPointToServers[e][currentCache];
+        }
+    }
+
+    int video, endpoint, requests;
+
+    for(int r = 0; r < R; ++r)
+    {
+        reader >> video;
+        reader >> endpoint;
+        reader >> requests;
+
+        if(endpointRequests.count(endpoint) < 1)
+            endpointRequests[endpoint];
+
+        endpointRequests[endpoint][video] = requests;
+    }
+}
+
 int main()
 {
     VideoSizes videoSizes;
@@ -45,6 +91,40 @@ int main()
     AllEndPointToServers allEndPointToServers;
     Requests requests;
     EndpointRequests endpointRequests;
+    RemainingCapacity remainingCapacity;
+    AssignedServerVideos assignedServerVideos;
+
+    read("me_at_the_zoo.in", videoSizes, endPointToCentral, allEndPointToServers, endpointRequests);
+
+    // Fill remaining capacities
+    for(auto & kv : cacheServers)
+    {
+        remainingCapacity[kv.first] = kv.second;
+    }
+
+    // Do algo
+
+    // trouver request max (count * size)
+    int video = 0;
+    int endpoint = 0;
+    int max = 0;
+    // We ignore values above this
+    int threshold = std::numeric_limits<int>::max();
+    int test;
+    for(auto & endpoint_request : endpointRequests)
+    {
+        for(auto & video_count : endpoint_request.second)
+        {
+            test = video_count.second * videoSizes[video_count.first];
+            if(test > max && test < threshold)
+            {
+                max = test;
+                endpoint = endpoint_request.first;
+                video = video_count.first;
+            }
+        }
+    }
+    threshold = max;
 
     return 0;
 }
