@@ -46,11 +46,11 @@ EndpointRequests endpointRequests;
 RemainingCapacity remainingCapacity;
 AssignedServerVideos assignedServerVideos;
 int video = -1; // Current video of the request
+int video_size; // Current video size
 int endpoint = -1; // Current endpoint of the request
 int max = -1; // Value (size * count) of the request
 int test; // Temp value
-int serverid; // Id du meilleur serveur pour l'ajout
-int min_latency; // Meilleur latence trouvee pour un endpoint
+int serverid = -1; // Id du meilleur serveur pour l'ajout
 
 void trouver_meilleur_request()
 {
@@ -70,11 +70,23 @@ void trouver_meilleur_request()
             }
         }
     }
+    video_size = videoSizes[video];
 }
 
 void trouver_meilleur_serveur()
 {
+    const EndpointsToServers & endpointsServers = allEndPointToServers[endpoint];
+    for(int i = 0, n = endpointsServers.size(); i < n; i++)
+    {
+        serverid = endpointsServers[i].fisrt;
+        if (remainingCapacity[serverid] >= video_size) break;
+    }
 
+    if (serverid != -1)
+    {
+        remainingCapacity[serverid] -= video_size;
+        endpointRequests[endpoint][video] = requests;
+    }
 }
 
 void read(const std::string &filename, VideoSizes &videoSizes,
@@ -118,7 +130,6 @@ void read(const std::string &filename, VideoSizes &videoSizes,
         if(endpointRequests.count(endpoint) < 1)
             endpointRequests[endpoint];
 
-        endpointRequests[endpoint][video] = requests;
     }
 }
 
@@ -132,13 +143,20 @@ int main()
         remainingCapacity[kv.first] = kv.second;
     }
 
+    // Trier EndpointsToServers Latencies
+
     // Tant qu'il n'y plus de requests a traiter
     do
     {
         video = -1;
+        video_size = -1;
         endpoint = -1;
+        serverid = -1;
 
         trouver_meilleur_request();
+
+        if (video == -1) break;
+
         trouver_meilleur_serveur();
 
         // Modifier request pour ne plus passer dessus
