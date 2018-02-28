@@ -55,6 +55,7 @@ int max = -1; // Value (size * count) of the request
 int test; // Temp value
 int serverid = -1; // Id du meilleur serveur pour l'ajout
 std::vector<std::pair<int, int>> requestCandidate;
+int endpoint_size;
 
 std::default_random_engine generator;
 
@@ -77,6 +78,12 @@ void trouver_meilleur_request()
         }
     }
     video_size = videoSizes[video];
+}
+
+void trouver_meilleur_request_aleatoire()
+{
+    if (requestCandidate.size() == 0) return;
+
 }
 
 void trouver_meilleur_serveur()
@@ -197,6 +204,8 @@ int main()
         {
             std::sort(ep.second.begin(), ep.second.end(), pairCompare);
         }
+
+        endpoint_size = endPointToCentral.size();
 
         // Tant qu'il n'y plus de requests a traiter
         do
