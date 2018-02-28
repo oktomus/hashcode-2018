@@ -5,27 +5,27 @@
 #include <limits>
 
 // Size for each video
-typedef std::map<std::size_t, std::size_t> VideoSizes;
+typedef std::map<int, int> VideoSizes;
 
 // Capacity for each server
-typedef std::map<std::size_t, std::size_t> CacheServers;
+typedef std::map<int, int> CacheServers;
 
 // Latency from endpoint to central
-typedef std::map<std::size_t, std::size_t> EndPointToCentral;
+typedef std::map<int, int> EndPointToCentral;
 
 // Lantency from 1 endpoint to servers
 // First: ServerId, Second: Latency
-typedef std::map<std::size_t, std::size_t> EndPointToServers;
+typedef std::map<int, int> EndPointToServers;
 // Lantency from all endpoint to servers
-typedef std::map<std::size_t, EndPointToServers> AllEndPointToServers;
+typedef std::map<int, EndPointToServers> AllEndPointToServers;
 
 // Request is video -> count
 // First: Video Id, Second: count
-typedef std::map<std::size_t, std::size_t> Requests;
+typedef std::map<int, int> Requests;
 
 // Endpoints Request
-// First id endpostd::size_t, Second: Requests
-typedef std::map<std::size_t, Requests> EndpointRequests;
+// First id endpoint, Second: Requests
+typedef std::map<int, Requests> EndpointRequests;
 
 
 // Algo structs
