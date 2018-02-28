@@ -15,7 +15,7 @@ typedef std::map<int, int> EndPointToCentral;
 
 // Lantency from 1 endpoint to servers
 // First: ServerId, Second: Latency
-typedef std::vector<std::pair<int, int>> endPointToServers;
+typedef std::vector<std::pair<int, int>> EndPointToServers;
 // Lantency from all endpoint to servers
 typedef std::map<int, EndPointToServers> AllEndPointToServers;
 
@@ -89,13 +89,11 @@ void trouver_meilleur_serveur()
     }
 }
 
-void read(const std::string &filename, VideoSizes &videoSizes,
-          EndPointToCentral &endPointToCentral, AllEndPointToServers &allEndPointToServers,
-          EndpointRequests &endpointRequests)
+void read(const std::string &filename)
 {
     std::ifstream reader(filename);
 
-    int V, E, R, C, X, numberOfCaches, currentCache;
+    int V, E, R, C, X, numberOfCaches, currentCache, currentLatency;
     reader >> V >> E >> R >> C >> X;
 
     for(int v = 0; v < V; ++v)
@@ -111,11 +109,10 @@ void read(const std::string &filename, VideoSizes &videoSizes,
         for(int c = 0; c < numberOfCaches; ++c)
         {
             reader >> currentCache;
+            reader >> currentLatency;
 
-            if(allEndPointToServers.count(e) < 1)
-                allEndPointToServers[e];
-
-            reader >> allEndPointToServers[e][currentCache];
+            std::pair<int ,int> p = std::make_pair(currentCache, currentLatency);
+            allEndPointToServers[e].push_back(p);
         }
     }
 
@@ -135,7 +132,7 @@ void read(const std::string &filename, VideoSizes &videoSizes,
 
 int main()
 {
-    read("exemple.in", videoSizes, endPointToCentral, allEndPointToServers, endpointRequests);
+    read("exemple.in");
 
     // Fill remaining capacities
     for(auto & kv : cacheServers)
