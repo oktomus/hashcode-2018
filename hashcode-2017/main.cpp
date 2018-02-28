@@ -156,7 +156,7 @@ int main()
         "exemple.in"
     };
 
-    for(int i = 0; i < fichiers.size(); i++)
+    for(std::size_t i = 0; i < fichiers.size(); i++)
     {
         read(fichiers[i]);
 
@@ -201,7 +201,7 @@ int main()
         for(auto & server_video : assignedServerVideos)
         {
             writer << server_video.first;
-            for(int v = 0; v < server_video.second.size(); v++)
+            for(std::size_t v = 0; v < server_video.second.size(); v++)
             {
                 writer << " " << server_video.second[v];
             }
