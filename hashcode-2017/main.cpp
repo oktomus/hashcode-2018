@@ -132,14 +132,14 @@ void read(const std::string &filename)
 
         if(endpointRequests.count(endpoint) < 1)
             endpointRequests[endpoint];
-
+        endpointRequests[endpoint][video] = requests;
     }
 }
 
 int main()
 {
     std::vector<std::string> fichiers = {
-        "example.in"
+        "exemple.in"
     };
 
     for(int i = 0; i < fichiers.size(); i++)
