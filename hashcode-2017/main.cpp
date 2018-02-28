@@ -84,7 +84,13 @@ void trouver_meilleur_request()
 void trouver_meilleur_request_aleatoire()
 {
     if (requestCandidate.size() == 0) return;
-
+    std::uniform_int_distribution<int> rand1(0, requestCandidate.size());
+    int index = rand1(generator);
+    const std::pair<int, int> & pair = requestCandidate[index];
+    endpoint = pair.first;
+    video = pair.second;
+    video_size = videoSizes[video];
+    requestCandidate.erase(requestCandidate.begin() + index);
 }
 
 void trouver_meilleur_serveur()
@@ -181,8 +187,6 @@ int main()
 {
     generator.seed(std::chrono::system_clock::now().time_since_epoch().count());
 
-    std::uniform_real_distribution<int> rand1(0, 10);
-    rand1(generator);
 
     std::vector<std::string> fichiers = {
         "exemple.in",
@@ -206,7 +210,6 @@ int main()
             std::sort(ep.second.begin(), ep.second.end(), pairCompare);
         }
 
-        endpoint_size = endPointToCentral.size();
 
         // Tant qu'il n'y plus de requests a traiter
         do
@@ -217,7 +220,8 @@ int main()
             serverid = -1;
             max = -1;
 
-            trouver_meilleur_request();
+            //trouver_meilleur_request();
+            trouver_meilleur_request_aleatoire();
 
             if (video == -1) break;
 
