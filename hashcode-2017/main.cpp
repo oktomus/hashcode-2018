@@ -42,7 +42,6 @@ typedef std::map<int, std::vector<int>> AssignedServerVideos;
 VideoSizes videoSizes;
 CacheServers cacheServers;
 EndPointToCentral endPointToCentral;
-EndPointToServers endPointToServers;
 AllEndPointToServers allEndPointToServers;
 Requests requests;
 EndpointRequests endpointRequests;
