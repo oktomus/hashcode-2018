@@ -61,5 +61,10 @@ int main()
     RemainingCapacity remainingCapacity;
     AssignedServerVideos assignedServerVideos;
 
+    // Fill remaining capacities
+    for(auto & kv : cacheServers)
+    {
+        remainingCapacity[kv.first] = kv.second;
+    }
     return 0;
 }
