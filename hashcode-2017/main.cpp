@@ -3,6 +3,7 @@
 #include <map>
 #include <fstream>
 #include <limits>
+#include <algorithm>
 
 // Size for each video
 typedef std::map<int, int> VideoSizes;
@@ -134,6 +135,13 @@ void read(const std::string &filename)
             endpointRequests[endpoint];
         endpointRequests[endpoint][video] = requests;
     }
+
+    reader.close();
+}
+
+bool pairCompare(const std::pair<int, int>& firstElem, const std::pair<int, int>& secondElem)
+{
+  return firstElem.second < secondElem.second;
 }
 
 int main()
@@ -153,6 +161,10 @@ int main()
         }
 
         // Trier EndpointsToServers Latencies
+        for(auto & ep : allEndPointToServers)
+        {
+            std::sort(ep.second.begin(), ep.second.end(), pairCompare);
+        }
 
         // Tant qu'il n'y plus de requests a traiter
         do
