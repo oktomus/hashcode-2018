@@ -150,6 +150,21 @@ bool pairCompare(const std::pair<int, int>& firstElem, const std::pair<int, int>
   return firstElem.second < secondElem.second;
 }
 
+int eval()
+{
+    int score = 0;
+    // pour chaque endpoint, on calcul le gain pour chaque request.
+    for(auto & epr : endpointRequests)
+    {
+        for(auto & r : epr)
+        {
+            // si la vidéo r.first est dans un cache alors on ajoute aux gains
+        }
+    }
+
+    return score;
+}
+
 int main()
 {
     std::vector<std::string> fichiers = {
@@ -189,6 +204,8 @@ int main()
             // Modifier request pour ne plus passer dessus
             endpointRequests[endpoint][video] = -1;
         } while(video != -1);
+
+        std::cout << "Score : " << eval() << std::endl;
 
         // Export
 
