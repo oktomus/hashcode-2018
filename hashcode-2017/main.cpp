@@ -15,7 +15,7 @@ typedef std::map<int, int> EndPointToCentral;
 
 // Lantency from 1 endpoint to servers
 // First: ServerId, Second: Latency
-typedef std::vector<std::pair<int, int>> endPointToServers;
+typedef std::vector<std::pair<int, int>> EndPointToServers;
 // Lantency from all endpoint to servers
 typedef std::map<int, EndPointToServers> AllEndPointToServers;
 
@@ -77,9 +77,7 @@ void trouver_meilleur_serveur()
 
 }
 
-void read(const std::string &filename, VideoSizes &videoSizes,
-          EndPointToCentral &endPointToCentral, AllEndPointToServers &allEndPointToServers,
-          EndpointRequests &endpointRequests)
+void read(const std::string &filename)
 {
     std::ifstream reader(filename);
 
