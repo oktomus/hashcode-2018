@@ -147,7 +147,7 @@ void read(const std::string &filename)
 
 bool pairCompare(const std::pair<int, int>& firstElem, const std::pair<int, int>& secondElem)
 {
-  return firstElem.second < secondElem.second;
+  return firstElem.second > secondElem.second;
 }
 
 int main()
