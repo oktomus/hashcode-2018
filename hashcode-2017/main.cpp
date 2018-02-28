@@ -2,7 +2,9 @@
 #include <vector>
 #include <map>
 #include <fstream>
+#include <cassert>
 #include <limits>
+#include <sstream>
 
 // Size for each video
 typedef std::map<int, int> VideoSizes;
@@ -171,6 +173,26 @@ int main()
             // Modifier request pour ne plus passer dessus
             endpointRequests[endpoint][video] = -1;
         } while(video != -1);
+
+        // Export
+
+        std::string output_path = fichiers[i].substr(0, fichiers[i].find_last_of('.')) + ".out";
+
+        std::ofstream writer(output_path);
+        assert(writer.is_open());
+
+        writer << assignedServerVideos.size() << "\n";
+        for(auto & server_video : assignedServerVideos)
+        {
+            writer << server_video.first;
+            for(int v = 0; v < server_video.second.size(); v++)
+            {
+                writer << " " << server_video.second[v];
+            }
+            writer << "\n";
+        }
+
+        writer.close();
     }
     return 0;
 }
