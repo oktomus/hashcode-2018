@@ -1,14 +1,13 @@
 #include <iostream>
 #include <vector>
+#include <chrono>
+#include <random>
 #include <map>
 #include <fstream>
 #include <cassert>
 #include <limits>
 #include <algorithm>
 #include <sstream>
-#include <chrono>
-#include <random>
-
 // Size for each video
 typedef std::map<int, int> VideoSizes;
 
@@ -186,7 +185,6 @@ int eval()
 int main()
 {
     generator.seed(std::chrono::system_clock::now().time_since_epoch().count());
-
 
     std::vector<std::string> fichiers = {
         "exemple.in",
