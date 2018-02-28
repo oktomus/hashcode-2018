@@ -62,11 +62,17 @@ void trouver_meilleur_request()
         {
             if(video_count.second == -1) continue;
             test = video_count.second * videoSizes[video_count.first];
-            if(test > max && test < threshold)
+            if(test > max)
             {
                 max = test;
                 endpoint = endpoint_request.first;
                 video = video_count.first;
+
+                if (assignedServerVideos.count(serverid) < 1)
+                {
+                    assignedServerVideos[serverid];
+                    assignedServerVideos[serverid].push_back(video);
+                }
             }
         }
     }
@@ -75,17 +81,17 @@ void trouver_meilleur_request()
 
 void trouver_meilleur_serveur()
 {
-    const EndpointsToServers & endpointsServers = allEndPointToServers[endpoint];
+    EndPointToServers & endpointsServers = allEndPointToServers[endpoint];
     for(int i = 0, n = endpointsServers.size(); i < n; i++)
     {
-        serverid = endpointsServers[i].fisrt;
+        serverid = endpointsServers[i].first;
         if (remainingCapacity[serverid] >= video_size) break;
     }
 
     if (serverid != -1)
     {
         remainingCapacity[serverid] -= video_size;
-        endpointRequests[endpoint][video] = requests;
+        endpointRequests[endpoint][video] = -1;
     }
 }
 
