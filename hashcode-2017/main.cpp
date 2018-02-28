@@ -36,6 +36,19 @@ typedef std::map<int, int> RemainingCapacity;
 // [Server ID] [VideoId, VideoID....]
 typedef std::map<int, std::vector<int>> AssignedServerVideos;
 
+void read(const std::string &filename)
+{
+    std::ifstream reader(filename);
+
+    std::size_t V, E, R, C, X;
+    reader >> V >> E >> R >> C >> X;
+
+    for(size_t v = 0; v < V; ++v)
+    {
+
+    }
+}
+
 int main()
 {
     VideoSizes videoSizes;
