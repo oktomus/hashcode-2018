@@ -25,6 +25,16 @@ typedef std::map<int, int> Requests;
 // First id endpoint, Second: Requests
 typedef std::map<int, Requests> EndpointRequests;
 
+
+// Algo structs
+
+// Tell for [A Server Id] [Capcaity Left]
+typedef std::map<int, int> RemainingCapacity;
+
+// Out structs
+// [Server ID] [VideoId, VideoID....]
+typedef std::map<int, std::vector<int>> AssignedServerVideos;
+
 int main()
 {
     return 0;
