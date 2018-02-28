@@ -182,6 +182,22 @@ int eval()
     return score;
 }
 
+void checkValid()
+{
+    for(auto &server_videos : assignedServerVideos)
+    {
+        int capa = cacheServers[server_videos.first];
+        int taken = 0;
+        for(int i=0; i<server_videos.second.size();++i)
+        {
+            taken += videoSizes[server_videos.second.at(i)];
+        }
+        if(taken > capa)
+            std::cout << "proute proute proute " << taken << " " << capa << std::endl;
+    }
+    std::cout << "finit" << std::endl;
+}
+
 int main()
 {
     generator.seed(std::chrono::system_clock::now().time_since_epoch().count());
@@ -189,7 +205,9 @@ int main()
     std::vector<std::string> fichiers = {
         "exemple.in",
         "me_at_the_zoo.in",
-        "videos_worth_spreading.in"
+        "videos_worth_spreading.in",
+        "trending_today.in",
+        "kittens.in.txt"
     };
 
     for(std::size_t i = 0; i < fichiers.size(); i++)
@@ -231,6 +249,8 @@ int main()
 
         std::cout << "Score : " << eval() << std::endl;
 
+        checkValid();
+
         // Export
 
         std::string output_path = fichiers[i].substr(0, fichiers[i].find_last_of('.')) + ".out";
@@ -251,5 +271,6 @@ int main()
 
         writer.close();
     }
+
     return 0;
 }
