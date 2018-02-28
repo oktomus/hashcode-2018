@@ -4,3 +4,5 @@ TARGET = hashcode-2017
 SOURCES += main.cpp
 
 HEADERS +=
+
+QMAKE_CXXFLAGS_RELEASE *= -O2
