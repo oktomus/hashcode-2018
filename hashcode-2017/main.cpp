@@ -53,6 +53,7 @@ int endpoint = -1; // Current endpoint of the request
 int max = -1; // Value (size * count) of the request
 int test; // Temp value
 int serverid = -1; // Id du meilleur serveur pour l'ajout
+std::vector<std::pair<int, int>> requestCandidate;
 
 void trouver_meilleur_request()
 {
@@ -137,6 +138,8 @@ void read(const std::string &filename)
         if(endpointRequests.count(endpoint) < 1)
             endpointRequests[endpoint];
         endpointRequests[endpoint][video] = requests;
+
+        requestCandidate.push_back({endpoint,video});
     }
 
     reader.close();
@@ -151,6 +154,7 @@ int eval()
 {
     int score = 0;
     // pour chaque endpoint, on calcul le gain pour chaque request.
+    /*
     for(auto & epr : endpointRequests)
     {
         for(auto & r : epr)
@@ -158,14 +162,16 @@ int eval()
             // si la vidéo r.first est dans un cache alors on ajoute aux gains
         }
     }
-
+    */
     return score;
 }
 
 int main()
 {
     std::vector<std::string> fichiers = {
-        "exemple.in"
+        "exemple.in",
+        "me_at_the_zoo.in",
+        "videos_worth_spreading.in"
     };
 
     for(std::size_t i = 0; i < fichiers.size(); i++)
