@@ -69,12 +69,6 @@ void trouver_meilleur_request()
                 max = test;
                 endpoint = endpoint_request.first;
                 video = video_count.first;
-
-                if (assignedServerVideos.count(serverid) < 1)
-                {
-                    assignedServerVideos[serverid];
-                    assignedServerVideos[serverid].push_back(video);
-                }
             }
         }
     }
@@ -94,6 +88,7 @@ void trouver_meilleur_serveur()
     {
         remainingCapacity[serverid] -= video_size;
         endpointRequests[endpoint][video] = -1;
+        assignedServerVideos[serverid].push_back(video);
     }
 }
 
@@ -147,7 +142,7 @@ void read(const std::string &filename)
 
 bool pairCompare(const std::pair<int, int>& firstElem, const std::pair<int, int>& secondElem)
 {
-  return firstElem.second < secondElem.second;
+  return firstElem.second > secondElem.second;
 }
 
 int eval()
@@ -194,6 +189,7 @@ int main()
             video_size = -1;
             endpoint = -1;
             serverid = -1;
+            max = -1;
 
             trouver_meilleur_request();
 
