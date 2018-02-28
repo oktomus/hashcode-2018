@@ -45,6 +45,8 @@ int main()
     AllEndPointToServers allEndPointToServers;
     Requests requests;
     EndpointRequests endpointRequests;
+    RemainingCapacity remainingCapacity;
+    AssignedServerVideos assignedServerVideos;
 
     return 0;
 }
