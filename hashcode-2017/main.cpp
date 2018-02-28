@@ -81,7 +81,9 @@ void trouver_meilleur_serveur()
     for(int i = 0, n = endpointsServers.size(); i < n; i++)
     {
         serverid = endpointsServers[i].first;
-        if (remainingCapacity[serverid] >= video_size) break;
+        if (remainingCapacity[serverid] >= video_size)
+            break;
+        serverid = -1;
     }
 
     if (serverid != -1)
