@@ -138,33 +138,39 @@ void read(const std::string &filename)
 
 int main()
 {
-    read("exemple.in");
+    std::vector<std::string> fichiers = {
+        "example.in"
+    };
 
-    // Fill remaining capacities
-    for(auto & kv : cacheServers)
+    for(int i = 0; i < fichiers.size(); i++)
     {
-        remainingCapacity[kv.first] = kv.second;
+        read(fichiers[i]);
+
+        // Fill remaining capacities
+        for(auto & kv : cacheServers)
+        {
+            remainingCapacity[kv.first] = kv.second;
+        }
+
+        // Trier EndpointsToServers Latencies
+
+        // Tant qu'il n'y plus de requests a traiter
+        do
+        {
+            video = -1;
+            video_size = -1;
+            endpoint = -1;
+            serverid = -1;
+
+            trouver_meilleur_request();
+
+            if (video == -1) break;
+
+            trouver_meilleur_serveur();
+
+            // Modifier request pour ne plus passer dessus
+            endpointRequests[endpoint][video] = -1;
+        } while(video != -1);
     }
-
-    // Trier EndpointsToServers Latencies
-
-    // Tant qu'il n'y plus de requests a traiter
-    do
-    {
-        video = -1;
-        video_size = -1;
-        endpoint = -1;
-        serverid = -1;
-
-        trouver_meilleur_request();
-
-        if (video == -1) break;
-
-        trouver_meilleur_serveur();
-
-        // Modifier request pour ne plus passer dessus
-        endpointRequests[endpoint][video] = -1;
-    } while(video != -1);
-
     return 0;
 }
