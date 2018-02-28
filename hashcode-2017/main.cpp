@@ -2,6 +2,7 @@
 #include <vector>
 #include <map>
 #include <fstream>
+#include <limits>
 
 // Size for each video
 typedef std::map<std::size_t, std::size_t> VideoSizes;
@@ -100,5 +101,30 @@ int main()
     {
         remainingCapacity[kv.first] = kv.second;
     }
+
+    // Do algo
+
+    // trouver request max (count * size)
+    int video = 0;
+    int endpoint = 0;
+    int max = 0;
+    // We ignore values above this
+    int threshold = std::numeric_limits<int>::max();
+    int test;
+    for(auto & endpoint_request : endpointRequests)
+    {
+        for(auto & video_count : endpoint_request.second)
+        {
+            test = video_count.second * videoSizes[video_count.first];
+            if(test > max && test < threshold)
+            {
+                max = test;
+                endpoint = endpoint_request.first;
+                video = video_count.first;
+            }
+        }
+    }
+    threshold = max;
+
     return 0;
 }
