@@ -110,6 +110,11 @@ void read(const std::string &filename)
         reader >> videoSizes[v];
     }
 
+    for(int c = 0; c < C; ++c)
+    {
+        cacheServers[c] = X;
+    }
+
     for(int e = 0; e < E; ++e)
     {
         reader >> endPointToCentral[e];
