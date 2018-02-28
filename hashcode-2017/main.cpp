@@ -6,6 +6,8 @@
 #include <limits>
 #include <algorithm>
 #include <sstream>
+#include <chrono>
+#include <random>
 
 // Size for each video
 typedef std::map<int, int> VideoSizes;
@@ -55,6 +57,8 @@ int test; // Temp value
 int serverid = -1; // Id du meilleur serveur pour l'ajout
 std::vector<std::pair<int, int>> requestCandidate;
 int endpoint_size;
+
+std::default_random_engine generator;
 
 void trouver_meilleur_request()
 {
@@ -175,6 +179,11 @@ int eval()
 
 int main()
 {
+    generator.seed(std::chrono::system_clock::now().time_since_epoch().count());
+
+    std::uniform_real_distribution<int> rand1(0, 10);
+    rand1(generator);
+
     std::vector<std::string> fichiers = {
         "exemple.in",
         "me_at_the_zoo.in",
