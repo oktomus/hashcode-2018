@@ -68,11 +68,11 @@ inline void export_solution_file(const std::string & filename, const DataSolutio
     {
         const std::vector<int> &ptrRides = problem_solution.vehicule_rides.at(i);
 
-        writer << ((int)ptrRides.size());
+        writer << ((int)ptrRides.size()) << " ";
 
         for(j=0;j<ptrRides.size();++j)
         {
-            writer << ptrRides.at(j);
+            writer << ptrRides.at(j) << " ";
         }
 
         writer << std::endl;
@@ -85,23 +85,57 @@ inline void export_solution_file(const std::string & filename, const DataSolutio
 
 inline void test_reader()
 {
-	std::cout << "BEGIN TEST_READER\n";
+    std::cout << "BEGIN TEST_READER\n";
     std::string file = "a_example.in";
-	DataContainer problem_data;
+    DataContainer problem_data;
 
-	read_input_file(file, problem_data);
+    read_input_file(file, problem_data);
 
-	bool success = true;
+    bool success = true;
 
-	/*
-	if (problem_data.something != expected)
-	{
-		std::cout << "  Fail on pizza ingredients\n";
-		success = false;
-	}
-	*/
+    /*
+    if (problem_data.something != expected)
+    {
+        std::cout << "  Fail on pizza ingredients\n";
+        success = false;
+    }
+    */
 
-	std::cout << "TEST_READER: " << (success ? "OK": "FAIL") << "\n";
+    std::cout << "TEST_READER: " << (success ? "OK": "FAIL") << "\n";
+}
+
+inline void test_export()
+{
+    std::cout << "BEGIN TEST_EXPORT\n";
+    std::string file = "a_example.out.test";
+    std::string file_in = "a_example.in";
+
+    DataContainer problem_data;
+    read_input_file(file_in, problem_data);
+
+    DataSolution problem_solution(problem_data);
+
+    std::vector<int> tmp;
+    tmp.push_back(0);
+    problem_solution.vehicule_rides.push_back(tmp);
+    tmp.clear();
+    tmp.push_back(2);
+    tmp.push_back(1);
+    problem_solution.vehicule_rides.push_back(tmp);
+
+    export_solution_file(file, problem_solution);
+
+    bool success = true;
+
+    /*
+    if (problem_data.something != expected)
+    {
+        std::cout << "  Fail on pizza ingredients\n";
+        success = false;
+    }
+    */
+
+    std::cout << "TEST_EXPORT: " << (success ? "OK": "FAIL") << "\n";
 }
 
 #endif // IO_H

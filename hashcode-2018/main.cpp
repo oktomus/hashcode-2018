@@ -21,6 +21,8 @@ int main()
 	// Tests
 	test_reader();
 	std::cout << "\n";
+    test_export();
+    std::cout << "\n";
 	test_evaluator();
 	std::cout << "\n";
 
@@ -47,7 +49,7 @@ int main()
 
 		// Import
 		DataContainer problem_data;
-		read_input_file(fichier, problem_data);
+        read_input_file(fichier, problem_data);
 
 		// Resolve iterations times
 		std::size_t problem_iterations = iterations[i];
