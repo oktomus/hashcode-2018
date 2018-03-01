@@ -26,8 +26,8 @@ int main()
 
 	// Input data files
     std::vector<std::string> fichiers = {
-        "exemple.in",
-        "exemple.in"
+        "a_example.in",
+        "b_should_be_easy.in"
     };
 
 	// Number of generation per file
