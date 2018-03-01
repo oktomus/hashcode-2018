@@ -59,7 +59,7 @@ inline void export_solution_file(const std::string & filename, const DataSolutio
 
 	// solution.something >> writer ...
 
-    if(problem_solution.vehicule_rides.size() != problem_solution.problem_data.nb_vehicules)
+    if((int)problem_solution.vehicule_rides.size() != problem_solution.problem_data.nb_vehicules)
         std::cout << "-- WARNING -- : - OUTPUT 1 -" << std::endl;
 
     std::size_t i, j;

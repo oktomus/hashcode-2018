@@ -19,10 +19,12 @@ int main()
 	// Definir le working path de QT sur : data/hashcode-2018
 
 	// Tests
+    /*
 	test_reader();
 	std::cout << "\n";
     test_export();
     std::cout << "\n";
+    */
 	test_evaluator();
 	std::cout << "\n";
 
