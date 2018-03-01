@@ -41,6 +41,7 @@ CMakeLists.txt.user*
 # out files
 *.out
 *.zip
+*.out.test
 
 # Debug
 *peda-*.txt
