@@ -40,11 +40,11 @@ int main()
 	// Number of generation per file
 	std::vector<std::size_t> iterations =
 	{
-        100,
-        100,
-        100,
-        100,
-        100
+        10000,
+        10000,
+        10000,
+        10000,
+        10000
     };
 
 	assert(fichiers.size() == iterations.size());
@@ -73,10 +73,12 @@ int main()
 
 			SolutionScore score = calculate_score(problem_solution);
 
-			// Debug du score et validite
+            // Debug du score et validite
+            /*
 			std::cout << "  [Iteration " << j << "]: " <<
                 (score.valid ? "OK " : "FAIL ")
                 << ", SCORE= " << score.score << '\n';
+            */
 
 			// Export if better or first
 			if (j == 0 ||
@@ -85,7 +87,8 @@ int main()
 			{
 				last_score = score;
 				export_solution_file(output_path, problem_solution);
-				std::cout << "  -> Exported to " << output_path << "\n";
+                std::cout << "  -> Exported to " << output_path << " "
+                          << score.score << std::endl;
 			}
 		}
 
