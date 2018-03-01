@@ -118,7 +118,7 @@ public:
                 if(x != -1)
                 {
                     // on ajoute (sinon next)
-                    vehicule_rides.at(vehiculesId.at(j)).insert(vehicule_rides.at(vehiculesId.at(j)).begin()+x, ride);
+                    //vehicule_rides.at(vehiculesId.at(j)).insert(vehicule_rides.at(vehiculesId.at(j)).begin()+x, ride);
                     continue;
                 }
             }
@@ -177,6 +177,12 @@ public:
 
                     int time_distance = ride.earliest - last_ride.sim_end;
                     int euc_distance = abs(last_ride.x - ride.a) + abs(last_ride.y - ride.b);
+
+                    if (time_distance + 1 <= euc_distance)
+                    {
+                        vehicle_iteration++;
+                        continue;
+                    }
 
                     curent_critere = ride.finish - ride.earliest;
                     ride.sim_start = std::max(ride.earliest, last_ride.sim_end + euc_distance + 1);
