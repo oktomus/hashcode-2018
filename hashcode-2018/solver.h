@@ -40,6 +40,8 @@ public:
 
 	DataContainer & problem_data; // Ne pas modifier les data des bases si possible
 
+    std::vector<std::vector<int>> vehicule_rides; // [0, F-1]
+
 	// Methodes
 
 	inline void resolve()
