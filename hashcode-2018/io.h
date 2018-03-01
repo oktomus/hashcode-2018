@@ -11,6 +11,8 @@
 inline void read_input_file(const std::string &filename, DataContainer & output)
 {
     std::ifstream reader(filename.c_str());
+    int i;
+    Ride ride;
 
 	if (!reader.is_open())
 	{
@@ -19,6 +21,25 @@ inline void read_input_file(const std::string &filename, DataContainer & output)
 	}
 
 	// reader >> output.something...
+
+    reader >> output.hauteur;
+    reader >> output.largeur;
+    reader >> output.nb_vehicules;
+    reader >> output.nb_rides;
+    reader >> output.bonus;
+    reader >> output.temps_total;
+
+    for(i=0;i<output.nb_rides;++i)
+    {
+        reader >> ride.a;
+        reader >> ride.b;
+        reader >> ride.x;
+        reader >> ride.y;
+        reader >> ride.earliest;
+        reader >> ride.finish;
+        ride.sim_end = -1;
+        output.rides.push_back(ride);
+    }
 
     reader.close();
 }
@@ -45,7 +66,7 @@ inline void export_solution_file(const std::string & filename, const DataSolutio
 inline void test_reader()
 {
 	std::cout << "BEGIN TEST_READER\n";
-	std::string file = "exemple.in";
+    std::string file = "a_example.in";
 	DataContainer problem_data;
 
 	read_input_file(file, problem_data);
