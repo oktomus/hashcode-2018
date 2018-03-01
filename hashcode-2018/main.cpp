@@ -40,8 +40,8 @@ int main()
 	// Number of generation per file
 	std::vector<std::size_t> iterations =
 	{
-	    2,
-        3,
+        1,
+        1,
         1,
         1,
         1
