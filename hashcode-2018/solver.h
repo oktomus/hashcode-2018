@@ -146,26 +146,28 @@ public:
         int smallest_eral;
         int ride_id;
         int rand_id;
+        int best_ride_rand_id;
 
         while(ridesId.size() > 0)
         {
             // PLus petit ride
-            choix_ride = -1;
+            choix_ride = 0;
             do
             {
                 rand_id = random_int(0, ridesId.size() - 1);
                 ride_id = ridesId.at(rand_id);
                 Ride &ride = problem_data.rides.at(ride_id);
 
-                if (choix_ride == -1 || ride.earliest < smallest_eral)
+                if (choix_ride == 0 || ride.earliest < smallest_eral)
                 {
                     smallest_eral = ride.earliest;
-                    choix_ride = rand_id;
+                    best_ride_rand_id = rand_id;
                 }
                 choix_ride++;
             }while(choix_ride < iteration_choix_ride);
 
-            ride_id = choix_ride;
+            rand_id = best_ride_rand_id;
+            ride_id = ridesId.at(rand_id);
             Ride &ride = problem_data.rides.at(ride_id);
 
 
