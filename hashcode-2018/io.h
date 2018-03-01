@@ -55,9 +55,28 @@ inline void export_solution_file(const std::string & filename, const DataSolutio
 		exit(2);
 	}
 
-	const DataContainer & data_problem = problem_solution.problem_data;
+    // const DataContainer & data_problem = problem_solution.problem_data;
 
 	// solution.something >> writer ...
+
+    if(problem_solution.vehicule_rides.size() != problem_solution.problem_data.nb_vehicules)
+        std::cout << "-- WARNING -- : - OUTPUT 1 -" << std::endl;
+
+    std::size_t i, j;
+
+    for(i=0;i<problem_solution.vehicule_rides.size();++i)
+    {
+        const std::vector<int> &ptrRides = problem_solution.vehicule_rides.at(i);
+
+        writer << ((int)ptrRides.size());
+
+        for(j=0;j<ptrRides.size();++j)
+        {
+            writer << ptrRides.at(j);
+        }
+
+        writer << std::endl;
+    }
 
     writer.close();
 }
