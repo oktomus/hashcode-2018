@@ -40,11 +40,11 @@ int main()
 	// Number of generation per file
 	std::vector<std::size_t> iterations =
 	{
-        10000,
-        10000,
-        10000,
-        10000,
-        10000
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
     };
 
 	assert(fichiers.size() == iterations.size());
