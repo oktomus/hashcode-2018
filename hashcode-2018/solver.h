@@ -118,7 +118,7 @@ public:
                 if(x != -1)
                 {
                     // on ajoute (sinon next)
-                    //vehicule_rides.at(vehiculesId.at(j)).insert(vehicule_rides.at(vehiculesId.at(j)).begin()+x, ride);
+                    (vehicule_rides.at(vehiculesId.at(j))).insert((vehicule_rides.at(vehiculesId.at(j))).begin()+x, ridesId.at(i));
                     continue;
                 }
             }
