@@ -8,45 +8,45 @@
 
 inline int random_int(const int & min, const int & max)
 {
-	static std::uniform_int_distribution<int> randomize(0, 100);
+    static std::uniform_int_distribution<int> randomize(0, 100);
     static std::default_random_engine generator;
-	static bool first = true;
+    static bool first = true;
 
-	if (first)
-	{
+    if (first)
+    {
         generator.seed(std::chrono::system_clock::now().time_since_epoch().count());
-		first = false;
-	}
+        first = false;
+    }
 
-	if (randomize.a() != min || randomize.b() != max)
-	{
-		randomize = std::uniform_int_distribution<int>(min, max);
-	}
+    if (randomize.a() != min || randomize.b() != max)
+    {
+        randomize = std::uniform_int_distribution<int>(min, max);
+    }
 
-	return randomize(generator);
+    return randomize(generator);
 
 }
 
 class DataSolution
 {
 public:
-	DataSolution(DataContainer & input_data) :
-	    problem_data(input_data)
-	{
-	}
+    DataSolution(DataContainer & input_data) :
+        problem_data(input_data)
+    {
+    }
 
-	// Les donnes du sujets
-	// Nom des variables, minuscules avec underscore, ex: ingredients_pizza
+    // Les donnes du sujets
+    // Nom des variables, minuscules avec underscore, ex: ingredients_pizza
 
-	DataContainer & problem_data; // Ne pas modifier les data des bases si possible
+    DataContainer & problem_data; // Ne pas modifier les data des bases si possible
 
     std::vector<std::vector<int>> vehicule_rides; // [0, F-1]
 
-	// Methodes
+    // Methodes
 
-	inline void resolve()
-	{
-		// Main ALGORITHM
+    inline void resolve()
+    {
+        // Main ALGORITHM
     }
 
     inline int ajoutPossible(const std::vector<int> &current_rides, const Ride &ride)
@@ -83,6 +83,20 @@ public:
 
             std::random_shuffle(vehiculesId.begin(),vehiculesId.end());
 
+            /*
+            // On cherche une voiture assignable
+
+            for(j=0;j<problem_data.nb_vehicules;++j)
+            {
+                const std::vector<int> &current_rides = vehicule_rides.at(vehiculesId.at(j));
+
+                if(ajoutPossible(current_rides, ride) != -1)
+                {
+                    // si on peut ajouter alors on le fait
+                    // vehicule_rides.at(vehiculesId.at(i))
+                }
+            }
+            */
             // on assige un ride a un vehicule
             std::vector<int> r;
             r.push_back(ridesId.at(i));
