@@ -6,6 +6,7 @@
 
 class Ride
 {
+public:
     int a, b; // Ligne, colonne
     int x, y; // Ligne, colonne
     int earliest;
