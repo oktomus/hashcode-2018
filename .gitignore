@@ -2,6 +2,7 @@
 
 *.slo
 *.lo
+*.test
 *.o
 *.a
 *.la
