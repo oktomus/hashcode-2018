@@ -127,6 +127,8 @@ public:
             ridesId.push_back(i);
         std::random_shuffle(ridesId.begin(),ridesId.end());
 
+        vehicule_rides.resize(problem_data.nb_vehicules);
+
         int choix_vehicule;
 
         while(ridesId.size() > 0)
@@ -172,14 +174,15 @@ public:
                 // On oublie ce ride
                 if(ride.sim_done >= 10)
                 {
-                    ridesId.erase(ridesId.begin() + i);
+                    ridesId.erase(ridesId.begin() + rand_id);
                 }
             }
             else
             {
                 // on assige un ride a un vehicule
                 vehicule_rides[choix_vehicule].push_back(ride_id);
-                ridesId.erase(ridesId.begin() + i);
+                ridesId.erase(ridesId.begin() + rand_id);
+
             }
         }
     }
