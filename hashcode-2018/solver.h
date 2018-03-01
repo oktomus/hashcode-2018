@@ -143,7 +143,7 @@ public:
         int choix_vehicule;
         int best_critere;
         int rand_vehicle_id;
-        int max_iteration_vehicle = problem_data.nb_vehicules / 10;
+        int max_iteration_vehicle = 10;
         int vehicle_iteration;
         int curent_critere;
 
@@ -155,7 +155,7 @@ public:
             Ride &ride = problem_data.rides.at(ride_id);
 
             choix_vehicule = -1;
-            best_critere = std::numeric_limits<int>::min();
+            best_critere = std::numeric_limits<int>::max();
 
             // Trouver le meiller vehicule
             vehicle_iteration = 0;
@@ -164,9 +164,9 @@ public:
                 rand_vehicle_id = random_int(0, problem_data.nb_vehicules - 1);
                 const std::vector<int> & rides_for_this_vehicle = vehicule_rides[rand_vehicle_id];
 
+                curent_critere = abs(ride.a - ride.x) + abs(ride.b - ride.y);
                 if (rides_for_this_vehicle.size() == 0)
                 {
-                    curent_critere = ride.finish - ride.earliest;
                     ride.sim_start = ride.earliest;
                     ride.sim_end = ride.sim_start + abs(ride.a - ride.x) + abs(ride.b - ride.y) - 1;
                 }
@@ -184,12 +184,11 @@ public:
                         continue;
                     }
 
-                    curent_critere = ride.finish - ride.earliest;
                     ride.sim_start = std::max(ride.earliest, last_ride.sim_end + euc_distance + 1);
                     ride.sim_end = ride.sim_start + abs(ride.a - ride.x) + abs(ride.b - ride.y) - 1;
                 }
 
-                if(curent_critere > best_critere)
+                if(curent_critere < best_critere)
                 {
                     choix_vehicule = rand_vehicle_id;
                 }
@@ -203,36 +202,6 @@ public:
                 */
             }
 
-            if(choix_vehicule == -1)
-            {
-
-                for(int v = 0; v < vehicule_rides.size(); ++v)
-                {
-                    const std::vector<int> & rides_for_this_vehicle = vehicule_rides[v];
-
-                    if (rides_for_this_vehicle.size() == 0)
-                    {
-                        choix_vehicule = v;
-                        ride.sim_start = ride.earliest;
-                        ride.sim_end = ride.sim_start + abs(ride.a - ride.x) + abs(ride.b - ride.y) - 1;
-                        break;
-                    }
-
-                    const int last_ride_id = rides_for_this_vehicle[rides_for_this_vehicle.size() - 1];
-                    const Ride & last_ride = problem_data.rides[last_ride_id];
-
-                    int time_distance = ride.earliest - last_ride.sim_end;
-                    int euc_distance = abs(last_ride.x - ride.a) + abs(last_ride.y - ride.b);
-
-                    if (time_distance > euc_distance)
-                    {
-                        choix_vehicule = v;
-                        ride.sim_start = std::max(ride.earliest, last_ride.sim_end + euc_distance + 1);
-                        ride.sim_end = ride.sim_start + abs(ride.a - ride.x) + abs(ride.b - ride.y) - 1;
-                        break;
-                    }
-                }
-            }
             ride.sim_done += 1;
 
             if (choix_vehicule == -1)

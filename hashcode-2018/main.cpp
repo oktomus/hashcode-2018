@@ -30,9 +30,6 @@ int main()
 
 	// Input data files
     std::vector<std::string> fichiers = {
-        "a_example.in",
-        "b_should_be_easy.in",
-        "c_no_hurry.in",
         "d_metropolis.in",
         "e_high_bonus.in"
     };
@@ -40,9 +37,6 @@ int main()
 	// Number of generation per file
 	std::vector<std::size_t> iterations =
 	{
-        10000,
-        10000,
-        10000,
         10000,
         10000
     };
