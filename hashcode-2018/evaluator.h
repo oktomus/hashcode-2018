@@ -39,14 +39,21 @@ inline SolutionScore calculate_score(const DataSolution & solution)
             // Simulation check
             if (ride.sim_end == -1 || ride.sim_start == -1)
             {
-                std::cout << "    [Check] Ride " << ride_index << " is assigned but never simulate\n";
+                std::cout << "    [CheckFail] Ride " << ride_index << " is assigned but never simulate\n";
                 result.valid = false;
                 return result;
             }
 
             if (ride.sim_start < ride.earliest)
             {
-                std::cout << "    [Check] Ride " << ride_index << " start before its earliest\n";
+                std::cout << "    [CheckFail] Ride " << ride_index << " start before its earliest\n";
+                result.valid = false;
+                return result;
+            }
+
+            if (ride.sim_end >= problem_data.temps_total)
+            {
+                std::cout << "    [CheckFail] Ride " << ride_index << " end after simulation\n";
                 result.valid = false;
                 return result;
             }
@@ -55,9 +62,34 @@ inline SolutionScore calculate_score(const DataSolution & solution)
             // Distance compute ok
             if (ride.sim_end - ride.sim_start + 1 != distance)
             {
-                std::cout << "    [Check] Ride " << ride_index << " simulation doesn't match with distance\n";
+                std::cout << "    [CheckFail] Ride " << ride_index << " simulation doesn't match with distance\n";
                 result.valid = false;
                 return result;
+            }
+
+            // Test if doesn' overlap with previous one
+            if (ri > 0)
+            {
+                const int previous_ride_index = rides[ri - 1];
+                const Ride & previous = problem_data.rides[previous_ride_index];
+
+                const int rides_distance = abs(ride.a - previous.x) + abs(ride.b - previous.y);
+
+                if (ride.sim_start < previous.sim_end)
+                {
+                    std::cout << "    [CheckFail] Ride " << ride_index << " start before its previous ride " << previous_ride_index << " ends\n";
+                    result.valid = false;
+                    return result;
+                }
+
+                const int times_distance = ride.sim_start - previous.sim_end;
+
+                if (times_distance <= rides_distance)
+                {
+                    std::cout << "    [CheckFail] Ride " << ride_index << " start before arryving at its previous ride " << previous_ride_index << "\n";
+                    result.valid = false;
+                    return result;
+                }
             }
 
             // Test if finished on time
@@ -117,7 +149,7 @@ inline void test_evaluator()
         if (score.valid)
         {
             success = false;
-            std::cout << "    [T1] should not have valid score\n";
+            std::cout << "    [X] should not have valid score\n";
         }
     }
 
@@ -135,7 +167,7 @@ inline void test_evaluator()
         if (score.valid)
         {
             success = false;
-            std::cout << "    [T2] should not have valid score\n";
+            std::cout << "    [X] should not have valid score\n";
         }
     }
 
@@ -153,26 +185,120 @@ inline void test_evaluator()
         if (!score.valid)
         {
             success = false;
-            std::cout << "    [T3] should have valid score\n";
+            std::cout << "    [X] should have valid score\n";
         }
 
         if (score.score != 4 + 2)
         {
             success = false;
-            std::cout << "    [T3] wrong score " << 6 << " != " << score.score << "\n";
+            std::cout << "    [X] wrong score " << 6 << " != " << score.score << "\n";
         }
     }
+    {
+        std::cout << "  [T4]\n";
+        // Correct + not bonus
+        problem_solution.vehicule_rides = {
+            {0}, {}
+        };
 
-    problem_solution.vehicule_rides = {
-        {0}, {2, 1}
-    };
+        problem_data.rides[0].sim_start = 3;
+        problem_data.rides[0].sim_end = 6;
+        SolutionScore score = calculate_score(problem_solution);
 
-    problem_data.rides[0].sim_start = 2;
-    problem_data.rides[0].sim_end = 6;
-    problem_data.rides[2].sim_start = 0;
-    problem_data.rides[2].sim_end = 2;
-    problem_data.rides[1].sim_start = 3;
-    problem_data.rides[1].sim_end = 5;
+        if (!score.valid)
+        {
+            success = false;
+            std::cout << "    [X] should have valid score\n";
+        }
+
+        if (score.score != 4)
+        {
+            success = false;
+            std::cout << "    [X] wrong score " << 4 << " != " << score.score << "\n";
+        }
+    }
+    {
+        std::cout << "  [T5]\n";
+        // One ride but out of simulation bounds
+        problem_solution.vehicule_rides = {
+            {0}, {}
+        };
+
+        problem_data.rides[0].sim_start = 6;
+        problem_data.rides[0].sim_end = 10;
+        SolutionScore score = calculate_score(problem_solution);
+
+        if (score.valid)
+        {
+            success = false;
+            std::cout << "    [X] should not have valid score\n";
+        }
+    }
+    {
+        std::cout << "  [T6]\n";
+        // Two OK rides
+        problem_solution.vehicule_rides = {
+            {0}, {1}
+        };
+        problem_data.rides[0].sim_start = 2;
+        problem_data.rides[0].sim_end = 5;
+        problem_data.rides[1].sim_start = 0;
+        problem_data.rides[1].sim_end = 1;
+        SolutionScore score = calculate_score(problem_solution);
+        if (!score.valid)
+        {
+            success = false;
+            std::cout << "    [X] should have valid score\n";
+        }
+        if (score.score != 4 + 2 + 2 + 2)
+        {
+            success = false;
+            std::cout << "    [X] wrong score " << 10 << " != " << score.score << "\n";
+        }
+    }
+    {
+        std::cout << "  [T7]\n";
+        // Three OK rides
+        problem_solution.vehicule_rides = {
+            {0}, {2, 1}
+        };
+        problem_data.rides[0].sim_start = 2;
+        problem_data.rides[0].sim_end = 5;
+        problem_data.rides[2].sim_start = 0;
+        problem_data.rides[2].sim_end = 1;
+        problem_data.rides[1].sim_start = 3;
+        problem_data.rides[1].sim_end = 4;
+        SolutionScore score = calculate_score(problem_solution);
+        if (!score.valid)
+        {
+            success = false;
+            std::cout << "    [X] should have valid score\n";
+        }
+        if (score.score != 2 + 4 + 2 + 2 + 2)
+        {
+            success = false;
+            std::cout << "    [X] wrong score " << 12 << " != " << score.score << "\n";
+        }
+    }
+    {
+        std::cout << "  [T7]\n";
+        // Three rides with 2 overlapping rides
+        problem_solution.vehicule_rides = {
+            {0}, {2, 1}
+        };
+        problem_data.rides[0].sim_start = 2;
+        problem_data.rides[0].sim_end = 5;
+        problem_data.rides[2].sim_start = 0;
+        problem_data.rides[2].sim_end = 1;
+        problem_data.rides[1].sim_start = 2;
+        problem_data.rides[1].sim_end = 3;
+        SolutionScore score = calculate_score(problem_solution);
+        if (score.valid)
+        {
+            success = false;
+            std::cout << "    [X] should not have valid score\n";
+        }
+    }
 
     //problem_solution.
 
