@@ -10,7 +10,7 @@
 
 inline void read_input_file(const std::string &filename, DataContainer & output)
 {
-    std::ifstream reader(filename);
+    std::ifstream reader(filename.c_str());
 
 	if (!reader.is_open())
 	{
@@ -25,7 +25,7 @@ inline void read_input_file(const std::string &filename, DataContainer & output)
 
 inline void export_solution_file(const std::string & filename, const DataSolution & problem_solution)
 {
-    std::ofstream writer(filename);
+    std::ofstream writer(filename.c_str());
 
 	if (!writer.is_open())
 	{
