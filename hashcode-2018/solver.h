@@ -49,11 +49,20 @@ public:
         // Main ALGORITHM
     }
 
-    inline int ajoutPossible(const std::vector<int> &current_rides, const Ride &ride)
+    inline int ajoutPossible(const std::vector<int> &current_rides, Ride &ride)
     {
         // ajout possible si la voiture n'est pas occupe avant la fin.
+        // en first ?
 
+        ride.sim_start = ride.earliest;
+        ride.sim_end = ride.sim_start + abs(ride.a - ride.x) + abs(ride.b - ride.y) - 1;
 
+        if(ride.sim_end <= problem_data.rides.at(current_rides.at(0)).sim_start)
+            return 0;
+
+        // au milieu ?
+
+        // en last ?
 
         return -1;
     }
@@ -105,9 +114,11 @@ public:
                 std::vector<int> current_rides;
                 current_rides = vehicule_rides.at(vehiculesId.at(j));
                 // si assignable
-                if(ajoutPossible(current_rides,ride))
+                int x = ajoutPossible(current_rides,ride);
+                if(x != -1)
                 {
                     // on ajoute (sinon next)
+                    vehicule_rides.at(vehiculesId.at(j)).insert(vehicule_rides.at(vehiculesId.at(j)).begin()+x, ride);
                     continue;
                 }
             }
