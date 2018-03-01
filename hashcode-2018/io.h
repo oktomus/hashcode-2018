@@ -38,6 +38,7 @@ inline void read_input_file(const std::string &filename, DataContainer & output)
         reader >> ride.earliest;
         reader >> ride.finish;
         ride.sim_end = -1;
+        ride.sim_start = -1;
         output.rides.push_back(ride);
     }
 
