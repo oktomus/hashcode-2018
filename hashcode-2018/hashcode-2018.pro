@@ -10,3 +10,5 @@ HEADERS += \
     evaluator.h
 
 QMAKE_CXXFLAGS_RELEASE *= -O2
+
+CONFIG += c++11
