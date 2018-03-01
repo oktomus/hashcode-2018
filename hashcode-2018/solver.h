@@ -141,13 +141,33 @@ public:
         vehicule_rides.resize(problem_data.nb_vehicules);
 
         int choix_vehicule;
+        int iteration_choix_ride = 1000;
+        int choix_ride = 0;
+        int smallest_eral;
+        int ride_id;
+        int rand_id;
 
         while(ridesId.size() > 0)
         {
-            // Pour chaque ride prit dans un ordre aleatoire
-            int rand_id = random_int(0, ridesId.size() - 1);
-            int ride_id = ridesId.at(rand_id);
+            // PLus petit ride
+            choix_ride = -1;
+            do
+            {
+                rand_id = random_int(0, ridesId.size() - 1);
+                ride_id = ridesId.at(rand_id);
+                Ride &ride = problem_data.rides.at(ride_id);
+
+                if (choix_ride == -1 || ride.earliest < smallest_eral)
+                {
+                    smallest_eral = ride.earliest;
+                    choix_ride = rand_id;
+                }
+                choix_ride++;
+            }while(choix_ride < iteration_choix_ride);
+
+            ride_id = choix_ride;
             Ride &ride = problem_data.rides.at(ride_id);
+
 
             choix_vehicule = -1;
             // Prendre un vehiculle dispo
@@ -169,7 +189,7 @@ public:
                 int time_distance = ride.earliest - last_ride.sim_end;
                 int euc_distance = abs(last_ride.x - ride.a) + abs(last_ride.y - ride.b);
 
-                if (time_distance > euc_distance)
+                if (time_distance > euc_distance + 1)
                 {
                     choix_vehicule = v;
                     ride.sim_start = std::max(ride.earliest, last_ride.sim_end + euc_distance + 1);
