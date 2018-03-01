@@ -11,6 +11,7 @@ public:
     int x, y; // Ligne, colonne
     int earliest;
     int finish;
+    int sim_end;
 };
 
 class DataContainer
