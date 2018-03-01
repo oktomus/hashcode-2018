@@ -99,6 +99,76 @@ public:
         std::cout << std::endl;
         */
     }
+
+    inline void resolve3()
+    {
+        // Main ALGORITHM
+        std::srand(std::chrono::system_clock::now().time_since_epoch().count());
+
+        int i, j;
+
+        // Ordre des rides
+        std::vector<int> ridesId;
+        for(i=0;i<problem_data.nb_rides;++i)
+            ridesId.push_back(i);
+        std::random_shuffle(ridesId.begin(),ridesId.end());
+
+        int choix_vehicule;
+
+        while(ridesId.size() > 0)
+        {
+            // Pour chaque ride prit dans un ordre aleatoire
+            int rand_id = random_int(0, ridesId.size() - 1);
+            int ride_id = ridesId.at(rand_id);
+            Ride &ride = problem_data.rides.at(ride_id);
+
+            choix_vehicule = -1;
+            // Prendre un vehiculle dispo
+            for(int v = 0; v < vehicule_rides.size(); ++v)
+            {
+                const std::vector<int> & rides_for_this_vehicle = vehicule_rides[v];
+
+                if (rides_for_this_vehicle.size() == 0)
+                {
+                    choix_vehicule = v;
+                    ride.sim_start = ride.earliest;
+                    ride.sim_end = ride.sim_start + abs(ride.a - ride.x) + abs(ride.b - ride.y) - 1;
+                    break;
+                }
+
+                const int last_ride_id = rides_for_this_vehicle[rides_for_this_vehicle.size() - 1];
+                const Ride & last_ride = problem_data.rides[last_ride_id];
+
+                int time_distance = ride.earliest - last_ride.sim_end;
+                int euc_distance = abs(last_ride.x - ride.a) + abs(last_ride.y - ride.b);
+
+                if (time_distance > euc_distance)
+                {
+                    choix_vehicule = v;
+                    ride.sim_start = std::max(ride.earliest, last_ride.sim_end + euc_distance + 1);
+                    ride.sim_end = ride.sim_start + abs(ride.a - ride.x) + abs(ride.b - ride.y) - 1;
+                    break;
+                }
+            }
+
+            ride.sim_done += 1;
+
+            if (choix_vehicule == -1)
+            {
+                // On oublie ce ride
+                if(ride.sim_done >= 10)
+                {
+                    ridesId.erase(ridesId.begin() + i);
+                }
+            }
+            else
+            {
+                // on assige un ride a un vehicule
+                vehicule_rides[choix_vehicule].push_back(ride_id);
+                ridesId.erase(ridesId.begin() + i);
+            }
+        }
+    }
 };
 
 #endif // SOLVER_H

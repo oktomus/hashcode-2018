@@ -13,6 +13,7 @@ public:
     int finish;
     int sim_end;    // -1 flag
     int sim_start;  // -1 flag
+    int sim_done = 0;
 };
 
 class DataContainer
