@@ -9,4 +9,4 @@ HEADERS += \
     solver.h \
     evaluator.h
 
-QMAKE_CXXFLAGS_RELEASE *= -O2
+QMAKE_CXXFLAGS_RELEASE *= -O2 -std=c+11
