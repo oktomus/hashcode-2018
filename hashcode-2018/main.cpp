@@ -63,7 +63,7 @@ int main()
 		for(std::size_t j = 0; j < problem_iterations; j++)
 		{
 			DataSolution problem_solution(problem_data);
-			problem_solution.resolve();
+            problem_solution.resolve2();
 
 			SolutionScore score = calculate_score(problem_solution);
 
