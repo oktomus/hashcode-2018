@@ -40,22 +40,25 @@ inline SolutionScore calculate_score(const DataSolution & solution)
             if (ride.sim_end == -1 || ride.sim_start == -1)
             {
                 std::cout << "    [CheckFail] Ride " << ride_index << " is assigned but never simulate\n";
-                result.valid = false;
-                return result;
+                continue;
+                //result.valid = false;
+                //return result;
             }
 
             if (ride.sim_start < ride.earliest)
             {
                 std::cout << "    [CheckFail] Ride " << ride_index << " start before its earliest\n";
-                result.valid = false;
-                return result;
+                continue;
+                //result.valid = false;
+                //return result;
             }
 
             if (ride.sim_end >= problem_data.temps_total)
             {
                 std::cout << "    [CheckFail] Ride " << ride_index << " end after simulation\n";
-                result.valid = false;
-                return result;
+                continue;
+                //result.valid = false;
+                //return result;
             }
 
             const int distance = abs(ride.a - ride.x) + abs(ride.b - ride.y);
@@ -63,8 +66,9 @@ inline SolutionScore calculate_score(const DataSolution & solution)
             if (ride.sim_end - ride.sim_start + 1 != distance)
             {
                 std::cout << "    [CheckFail] Ride " << ride_index << " simulation doesn't match with distance\n";
-                result.valid = false;
-                return result;
+                continue;
+                //result.valid = false;
+                //return result;
             }
 
             // Test if doesn' overlap with previous one
@@ -78,8 +82,9 @@ inline SolutionScore calculate_score(const DataSolution & solution)
                 if (ride.sim_start < previous.sim_end)
                 {
                     std::cout << "    [CheckFail] Ride " << ride_index << " start before its previous ride " << previous_ride_index << " ends\n";
-                    result.valid = false;
-                    return result;
+                    continue;
+                    //result.valid = false;
+                    //return result;
                 }
 
                 const int times_distance = ride.sim_start - previous.sim_end;
@@ -87,8 +92,9 @@ inline SolutionScore calculate_score(const DataSolution & solution)
                 if (times_distance <= rides_distance)
                 {
                     std::cout << "    [CheckFail] Ride " << ride_index << " start before arryving at its previous ride " << previous_ride_index << "\n";
-                    result.valid = false;
-                    return result;
+                    continue;
+                    //result.valid = false;
+                    //return result;
                 }
             }
 

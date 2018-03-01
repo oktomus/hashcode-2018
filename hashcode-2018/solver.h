@@ -79,29 +79,16 @@ public:
         for(i=0;i<problem_data.nb_rides;++i)
         {
             // Pour chaque ride prit dans un ordre aleatoire
-            const Ride &ride = problem_data.rides.at(ridesId.at(i));
+            Ride &ride = problem_data.rides.at(ridesId.at(i));
 
             std::random_shuffle(vehiculesId.begin(),vehiculesId.end());
 
-            /*
-            // On cherche une voiture assignable
-
-            for(j=0;j<problem_data.nb_vehicules;++j)
-            {
-                const std::vector<int> &current_rides = vehicule_rides.at(vehiculesId.at(j));
-
-                if(ajoutPossible(current_rides, ride) != -1)
-                {
-                    // si on peut ajouter alors on le fait
-                    // vehicule_rides.at(vehiculesId.at(i))
-                }
-            }
-            */
             // on assige un ride a un vehicule
             std::vector<int> r;
             r.push_back(ridesId.at(i));
             vehicule_rides.push_back(r);
-
+            ride.sim_start = ride.earliest;
+            ride.sim_end = ride.sim_start + abs(ride.a - ride.x) + abs(ride.b - ride.y) - 1;
             if(vehicule_rides.size()>=problem_data.nb_vehicules)
                 return;
         }
